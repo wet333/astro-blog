@@ -1,0 +1,55 @@
+---
+import FormattedDate from './FormattedDate.astro';
+
+const { slug, image, title, date } = Astro.props;
+---
+
+<a class="card" href={`/blog/${slug}/`}>
+    <img width={720} height={360} src={image} alt="" />
+    <div class="text-wrapper">
+        <h4 class="title">{title}</h4>
+        <p class="date">
+            <FormattedDate date={date} />
+        </p>
+    </div>
+</a>
+
+<style>
+    .card {
+        display: flex;
+        text-decoration: none;
+        flex-direction: column;
+        gap: 1rem;
+        color: var(--font-color);
+    }
+
+    .card:hover .title {
+        text-decoration: underline;
+    }
+
+    .text-wrapper {
+        position: relative;
+    }
+
+    .text-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 1rem);
+        background: linear-gradient(transparent, var(--background-color));
+        z-index: 1;
+    }
+
+    .title {
+        position: relative;
+        margin: 0;
+        isolation: isolate;
+    }
+
+    .date {
+        margin: 0;
+    }
+
+</style>
