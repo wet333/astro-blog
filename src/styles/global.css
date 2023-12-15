@@ -26,14 +26,14 @@
 }
 
 .dark-theme {
-    --font-color: rgb(255, 255, 255);
+    --font-color: rgb(252, 252, 252);
     --font-color-light: rgb(224, 224, 224);
     --font-color-invert: rgb(32, 32, 32);
 
     --border-color: rgb(255, 255, 255, var(--border-alpha));
     --shadows-color: rgba(243, 230, 164, 0.1);
 
-    --bg-color: #202020;
+    --bg-color: #161616;
 
     --code-tag-background: #f3e6a4;
 
@@ -108,6 +108,8 @@ a {
 
 a:hover {
     text-decoration: underline;
+    background: var(--font-color);
+    color: var(--bg-color);
 }
 
 p {

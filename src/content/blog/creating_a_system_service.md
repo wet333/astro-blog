@@ -2,7 +2,7 @@
 title: 'How to create a Systemd service in Ubuntu Linux'
 description: 'A short guide on how to create a Systemd service in Ubuntu Linux'
 pubDate: 'Dec 12 2023'
-heroImage: '/post-placeholder-linux2.png'
+heroImage: '/images/post-placeholder-linux.png'
 ---
 
 **Create a Shell Script**: First, you'll need a shell script that defines what your service should do. For this
