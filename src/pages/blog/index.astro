@@ -1,55 +1,48 @@
 ---
 import MasterHead from '../../layouts/MasterHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import BlogCard from '../../components/BlogCard.astro';
+import Layout from '../../layouts/Layout.astro';
 
 const posts = (await getCollection('blog')).sort(
     (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
 ---
 
-<!doctype html>
-<html lang="en">
-<head title={SITE_TITLE}>
-    <MasterHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-</head>
-<body>
-<Header />
-<main>
-    <section>
-        <div class="blog-list">
-            {
-                posts.map((post) => (
-                    <BlogCard
-                        slug={post.slug}
-                        title={post.data.title}
-                        date={post.data.pubDate}
-                        image={post.data.heroImage}
-                    />
-                ))
-            }
-        </div>
-    </section>
-</main>
-<Footer />
-</body>
-</html>
+<Layout>
+    <MasterHead slot="head" title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <main slot="main-contents">
+        <section>
+            <div class="blog-list">
+                {
+                    posts.map((post) => (
+                        <BlogCard
+                            slug={post.slug}
+                            title={post.data.title}
+                            date={post.data.pubDate}
+                            image={post.data.heroImage}
+                        />
+                    ))
+                }
+            </div>
+        </section>
+    </main>
+</Layout>
 
 <style>
-    main {
-        width: 960px;
-    }
-
     .blog-list {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
         list-style-type: none;
         margin: 0;
         padding: 0;
     }
 
+    @media (max-width: 768px) {
+        .blog-list {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
