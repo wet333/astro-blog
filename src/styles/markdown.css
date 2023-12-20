@@ -1,0 +1,7 @@
+hr + * {
+    margin-top: 1em;
+}
+
+:not(hr) + hr {
+    margin-top: 1.5em;
+}
