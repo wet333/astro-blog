@@ -116,20 +116,22 @@ import { SITE_NAME } from '../consts';
     const theme = localStorage.getItem('theme');
     if (theme) {
         if (theme === 'dark') {
-            body.classList.add('dark-theme');
+            body && body.classList.add('dark-theme');
         }
         if (theme === 'light') {
-            body.classList.remove('dark-theme');
+            body && body.classList.remove('dark-theme');
         }
     } else {
         if (prefersDarkScheme.matches) {
-            body.classList.add('dark-theme');
+            body && body.classList.add('dark-theme');
         }
     }
 
     // Toggle theme on click
-    toggleThemeBtn.addEventListener('click', (ev) => {
+    toggleThemeBtn && toggleThemeBtn.addEventListener('click', (ev) => {
         ev.preventDefault();
+
+        if (!body) return; // Checks if body exists
 
         // Get the current theme from local storage, if exists switch to the other one, if not set to dark
         const currentTheme = localStorage.getItem('theme');
@@ -147,4 +149,12 @@ import { SITE_NAME } from '../consts';
             localStorage.setItem('theme', 'dark');
         }
     });
+
+    //  make 'Blog' active when on a blog tag page
+    const url = window.location.pathname;
+    const blogLink = document.querySelector('.internal-links a[href="/blog"]');
+
+    if (blogLink && url.includes('/blog/tags/')) {
+        blogLink.classList.add('active');
+    }
 </script>

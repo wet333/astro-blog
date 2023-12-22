@@ -3,6 +3,7 @@ title: 'How Systemd works in Linux'
 description: 'A short guide on how Systemd works in Linux'
 pubDate: 'Dec 19 2023'
 heroImage: '/images/post-placeholder-linux.png'
+tags: [ 'linux', 'systemd' ]
 ---
 
 ## Introduction

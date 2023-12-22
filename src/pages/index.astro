@@ -2,13 +2,22 @@
 import MasterHead from '../layouts/MasterHead.astro';
 import Link from '../components/basic/Link.astro';
 import Layout from '../layouts/Layout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getTagsCount } from '../js/utils.js';
+
+import { SITE_DESCRIPTION } from '../consts';
+
+const posts = await Astro.glob('../content/blog/*.md');
+const tags = posts.map((post) => post.frontmatter.tags);
+const tagsCount = getTagsCount(tags);
 ---
 
 <Layout>
     <MasterHead slot="head" title={'Home'} description={SITE_DESCRIPTION} />
     <main slot="main-contents">
         <h1>🧑‍🚀 Hello, Astronaut!</h1>
+        {tagsCount.map((tag) => {
+            return <span class="blog-tag" data-attr-tag={tag.stringText}>{tag.stringText}:{tag.stringOccurences}</span>;
+        })}
         <p>
             Welcome to the official
             <Link href="https://astro.build/" label="Astro" />
@@ -47,3 +56,23 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         </p>
     </main>
 </Layout>
+
+<style>
+    .blog-tag {
+        padding: 0.2em 0.5em;
+        margin-right: 0.5em;
+        border-radius: 0.4rem;
+        background: var(--bg-color-2);
+    }
+</style>
+
+<script>
+    // Add onclick event to blog-tag elements
+    const blogTags = document.querySelectorAll('.blog-tag');
+    blogTags.forEach((tag) => {
+        tag.addEventListener('click', () => {
+            // Redirect to blog page with tag filter to the data-attr-tag value
+            window.location.href = `/blog/tags/${(tag as HTMLElement).dataset.attrTag}`;
+        });
+    });
+</script>

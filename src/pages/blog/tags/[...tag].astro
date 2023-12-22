@@ -1,0 +1,77 @@
+---
+import { getTagsCount, extractFileName } from '../../../js/utils.js';
+import Layout from '../../../layouts/Layout.astro';
+import MasterHead from '../../../layouts/MasterHead.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import { SITE_DESCRIPTION } from '../../../consts';
+import { type CollectionEntry, getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+    const posts = await getCollection('blog');
+    const tags = posts.map((post) => post.data.tags);
+
+    return getTagsCount(tags).map((tag) => ({
+        params: { tag: tag.stringText },
+        props: {
+            posts: posts.filter((post) => {
+                return post.data.tags?.includes(tag.stringText);
+            })
+        }
+    }));
+}
+
+type Props = {
+    posts: CollectionEntry<'blog'>[];
+};
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout>
+    <MasterHead slot="head" title="Blog" description={SITE_DESCRIPTION} />
+    <main slot="main-contents">
+        <h2 class="tag-blog-list-title">{tag} posts</h2>
+        <section>
+            <div class="blog-list">
+                {
+                    posts.map((post) => {
+                        return (
+                            <BlogCard
+                                slug={extractFileName(post.slug)}
+                                title={post.data.title}
+                                date={post.data.pubDate}
+                                image={post.data.heroImage}
+                            />
+                        );
+                    })
+                }
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<style>
+    .blog-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tag-blog-list-title {
+        margin-bottom: 1em;
+    }
+
+    .tag-blog-list-title::first-letter {
+        text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+        .blog-list {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
