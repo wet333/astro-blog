@@ -14,10 +14,7 @@ const tagsCount = getTagsCount(tags);
 <Layout>
     <MasterHead slot="head" title={'Home'} description={SITE_DESCRIPTION} />
     <main slot="main-contents">
-        <h1>🧑‍🚀 Hello, Astronaut!</h1>
-        {tagsCount.map((tag) => {
-            return <span class="blog-tag" data-attr-tag={tag.stringText}>{tag.stringText}:{tag.stringOccurences}</span>;
-        })}
+        <h1>Welcome</h1>
         <p>
             Welcome to the official
             <Link href="https://astro.build/" label="Astro" />
@@ -25,6 +22,15 @@ const tagsCount = getTagsCount(tags);
             template serves as a lightweight, minimally-styled starting point for anyone looking to
             build a personal website, blog, or portfolio with Astro.
         </p>
+        <hr>
+        <div>
+            <h3>Blog's topics: </h3>
+            {tagsCount.map((tag) => {
+                return <span class="blog-tag"
+                             data-attr-tag={tag.stringText}>{tag.stringText}:{tag.stringOccurences}</span>;
+            })}
+        </div>
+        <hr>
         <p>
             This template comes with a few integrations already configured in your
             <code>astro.config.mjs</code> file. You can customize your setup with
